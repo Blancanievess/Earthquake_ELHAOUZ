@@ -10,7 +10,6 @@
     <script src="Haouz.geojson"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Styles inchangés */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -22,34 +21,28 @@
             height: 100vh;
         }
         .containeer { 
-        display: grid; /* Utilisation de grid pour une disposition en matrice */
-        grid-template-columns: repeat(2, 1fr); /* 2 colonnes de taille égale */
-        grid-template-rows: repeat(2, 1fr); /* 2 lignes de taille égale */
-        gap: 20px; /* Espacement entre les boîtes */
+        display: grid; 
+        grid-template-columns: repeat(2, 1fr); 
+        grid-template-rows: repeat(2, 1fr); 
+        gap: 20px; 
         row-gap: 5px;
-        justify-items: center; /* Centre les éléments horizontalement dans chaque cellule de la grille */
-        align-items: center; /* Centre les éléments verticalement dans chaque cellule */
+        justify-items: center; 
+        align-items: center; 
         position: relative;
         left: 400px;
         }
-
-         /* Boîte de texte avec des coins arrondis et masques */
          .text-box {
-            --r: 25px; /* rayon */
-            --s: 40px; /* taille du coin */
+            --r: 25px;
+            --s: 40px; 
             padding: 20px;
             width: 300px;
             background-color: #fff;
             border-radius: var(--r);
             color: #333;
             font-family: Arial, sans-serif;
-
-            /* Masques généraux pour les coins */
             margin: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
-        /* Masque pour le coin supérieur gauche */
         .top-right {
             --_m:/calc(2*var(--r)) calc(2*var(--r))
             radial-gradient(#000 70%,#0000 72%) no-repeat;
@@ -61,8 +54,6 @@
     conic-gradient(at calc(100% - var(--s) - 2*var(--r)) calc(var(--s) + 2*var(--r)),
      #0000 25%,#000 0);
 }
-
-        /* Masque pour le coin supérieur droit */
         .top-left {
             --_m:/calc(2*var(--r)) calc(2*var(--r))
             radial-gradient(#000 70%,#0000 72%) no-repeat;
@@ -74,8 +65,6 @@
     conic-gradient(at calc(var(--s) + 2*var(--r)) calc(var(--s) + 2*var(--r)),
      #000 75%,#0000 0);
 }
-
-        /* Masque pour le coin inférieur gauche */
         .bottom-left {
             --_m:/calc(2*var(--r)) calc(2*var(--r))
             radial-gradient(#000 70%,#0000 72%) no-repeat;
@@ -87,7 +76,6 @@
     conic-gradient(from 180deg at calc(var(--s) + 2*var(--r)) calc(100% - var(--s) - 2*var(--r)),
      #0000 25%,#000 0);
 }
-        /* Masque pour le coin inférieur droit */
         .bottom-right {
             --_m:/calc(2*var(--r)) calc(2*var(--r))
             radial-gradient(#000 70%,#0000 72%) no-repeat;
@@ -161,25 +149,24 @@
         <div id="info" style="display: none;"> 
             <div class="containeer">
                 <div class="text-box bottom-right">
-                    <h2>Titre de l'information 1</h2>
-                    <p>Voici quelques informations avec un design spécial de coins arrondis et masqués, appliqué de manière créative.</p>
+                    <h2>Type de logement</h2>
+                    <p><canvas id="housingChart" width="200" height="200"></canvas></p>
                 </div>
                 <div class="text-box bottom-left">
-                    <h2>Type de logement </h2>
-                    <p><canvas id="housingChart" width="200" height="200"></canvas></p>
+                    <h2> Ancienneté du logement </h2>
+                    <p><canvas id="age" width="200" height="200"></canvas></p>
                 </div>
                 <div class="text-box top-right">
                     <h2>Statut d'occupation du logement </h2>
                     <p><canvas id="secondChart" width="200" height="200"></canvas></p>
                 </div>
                 <div class="text-box top-left">
-                    <h2>Titre de l'information 4</h2>
-                    <p>Voici quelques informations avec un design spécial de coins arrondis et masqués, appliqué de manière créative.</p>
+                    <h2>g</h2>
+                    <p>'h'</canvas></p>
                 </div>
             </div>            
         </div>
     </div>
-
     <script>
         var map = L.map('map').setView([31.337, -7.874], 10); 
         var arcgisLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -324,13 +311,59 @@ const options2 = {
         }
     }
 };
-
-// Création du second diagramme (en barres)
 new Chart(ctx2, {
-    type: 'doughnut', // Type de graphique en barres
+    type: 'doughnut', 
     data: data2,
     options: options2
 });
+        const ctx3 = document.getElementById('age').getContext('2d');
+        const data3 = {
+            labels: [
+                'Moins de 10 ans',
+                '10-19 ans',
+                '20-49 ans',
+                '50 ans et plus'
+            ],
+            datasets: [{
+                data: [23.1, 18.1, 24.3, 34.5],
+                backgroundColor: [
+                    '#4e73df', 
+                    '#1cc88a', 
+                    '#36b9cc', 
+                    '#f6c23e', 
+                    '#e74a3b', 
+                    '#858796'
+                ],
+                hoverBackgroundColor: [
+                    '#2e59d9',
+                    '#17a673',
+                    '#2c9faf',
+                    '#d4b12f',
+                    '#c72d2c',
+                    '#6c757d'
+                ]
+            }]
+        };
+        const optionss = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                        }
+                    }
+                }
+            }
+        };
+        new Chart(ctx3, {
+            type: 'doughnut',
+            data: data3,
+            options: optionss
+        });
     </script>
 </body>
 </html>
