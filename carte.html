@@ -7,30 +7,24 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-omnivore@0.3.3/leaflet-omnivore.min.js"></script>
+    <script src="Haouz.geojson"></script>
     <style>
-        /* Style global de la page */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
-
-        /* Conteneur principal avec carte */
         .container {
             display: flex;
             height: 100vh;
         }
-
-        /* Carte, elle occupe toute la largeur et hauteur */
         #map {
             width: 100%;
             height: 100%;
         }
-
-        /* Contrôle de couches et autres options à gauche de la carte */
         .control-panel {
-            background-color: rgba(255, 255, 255, 0.7); /* Légèrement transparent */
+            background-color: rgba(255, 255, 255, 0.7);
             color: rgb(0, 0, 0);
             width: 250px;
             padding: 20px;
@@ -40,12 +34,10 @@
             align-items: flex-start;
             justify-content: flex-start;
         }
-
         .control-panel h2 {
             margin: 0;
             font-size: 18px;
         }
-
         .control-panel button {
             background-color: #a85a00;
             border: none;
@@ -57,23 +49,18 @@
             cursor: pointer;
             border-radius: 5px;
         }
-
         .control-panel button:hover {
             background-color: #005e72;
         }
-
         .leaflet-control-layers {
             background-color: rgba(255, 255, 255, 0.9) !important;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
-        /* Responsivité */
         @media screen and (max-width: 768px) {
             .container {
                 flex-direction: column;
             }
-
             .control-panel {
                 width: 100%;
                 padding: 10px;
@@ -82,7 +69,6 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <div class="control-panel">
             <h2>Options de la carte</h2>
@@ -90,40 +76,39 @@
             <button onclick="toggleImagery()">Basculer l'imagerie</button>
             <button onclick="resetView()">Réinitialiser la vue</button>
         </div>
-
         <div id="map"></div>
     </div>
 
     <script>
-        // Initialisation de la carte avec Leaflet
-        var map = L.map('map').setView([31.6341, -8.0069], 10); // Coordonnées de AL HAOUZ, Maroc
-
-        // Couche de base avec l'imagerie ArcGIS
+        var map = L.map('map').setView([31.6341, -8.0069], 10); 
         var arcgisLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: '&copy; <a href="https://www.esri.com/en-us/home">Esri</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Couche OpenStreetMap (comme alternative)
         var openStreetMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         });
 
-        // Ajouter une couche GeoJSON pour les tremblements de terre (à définir dans geojsonLayer)
-        var geojsonLayer; // Remplacer par votre propre couche GeoJSON
+        var geojsonLayer = L.geoJSON(Haouz, {
+    style: function (feature) {
+        return {
+            color: "#ff7800", 
+            weight: 5,
+            opacity: 0.65
+        };
+    }
+}).addTo(map);
 
-        // Ajouter un contrôle de couches
         var baseMaps = {
             "ArcGIS Imagery": arcgisLayer,
             "OpenStreetMap": openStreetMapLayer
         };
-
         var overlayMaps = {
             "Tremblements de Terre": geojsonLayer
         };
 
         L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-        // Fonction pour basculer la couche des tremblements de terre
         function toggleLayer() {
             if (map.hasLayer(geojsonLayer)) {
                 map.removeLayer(geojsonLayer);
@@ -131,8 +116,6 @@
                 geojsonLayer.addTo(map);
             }
         }
-
-        // Fonction pour basculer la couche d'imagerie
         function toggleImagery() {
             if (map.hasLayer(arcgisLayer)) {
                 map.removeLayer(arcgisLayer);
@@ -142,12 +125,9 @@
                 arcgisLayer.addTo(map);
             }
         }
-
-        // Fonction pour réinitialiser la vue de la carte
         function resetView() {
-            map.setView([31.6341, -8.0069], 10); // Réinitialiser à la vue de départ
+            map.setView([31.6341, -8.0069], 10);
         }
     </script>
-
 </body>
 </html>
