@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-omnivore@0.3.3/leaflet-omnivore.min.js"></script>
     <script src="Haouz.geojson"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* Styles inchangés */
         body {
@@ -25,10 +26,10 @@
         grid-template-columns: repeat(2, 1fr); /* 2 colonnes de taille égale */
         grid-template-rows: repeat(2, 1fr); /* 2 lignes de taille égale */
         gap: 20px; /* Espacement entre les boîtes */
+        row-gap: 5px;
         justify-items: center; /* Centre les éléments horizontalement dans chaque cellule de la grille */
         align-items: center; /* Centre les éléments verticalement dans chaque cellule */
         position: relative;
-        top: 200px;    /* Déplace l'élément de 20px vers le bas */
         left: 400px;
         }
 
@@ -164,12 +165,12 @@
                     <p>Voici quelques informations avec un design spécial de coins arrondis et masqués, appliqué de manière créative.</p>
                 </div>
                 <div class="text-box bottom-left">
-                    <h2>Titre de l'information 2</h2>
-                    <p>Voici quelques informations avec un design spécial de coins arrondis et masqués, appliqué de manière créative.</p>
+                    <h2>Type de logement </h2>
+                    <p><canvas id="housingChart" width="200" height="200"></canvas></p>
                 </div>
                 <div class="text-box top-right">
-                    <h2>Titre de l'information 3</h2>
-                    <p>Voici quelques informations avec un design spécial de coins arrondis et masqués, appliqué de manière créative.</p>
+                    <h2>Statut d'occupation du logement </h2>
+                    <p><canvas id="secondChart" width="200" height="200"></canvas></p>
                 </div>
                 <div class="text-box top-left">
                     <h2>Titre de l'information 4</h2>
@@ -240,6 +241,96 @@
         function resetView() {
             map.setView([31.337, -7.874], 10);
         }
+        const ctx = document.getElementById('housingChart').getContext('2d');
+        const data = {
+            labels: [
+                'Villa',
+                'Appartement',
+                'Maison Marocaine',
+                'Habitat Sommaire',
+                'Logement Rural',
+                'Autre'
+            ],
+            datasets: [{
+                data: [0.9, 0.5, 38.8, 0.4, 58.9, 0.5],
+                backgroundColor: [
+                    '#4e73df', 
+                    '#1cc88a', 
+                    '#36b9cc', 
+                    '#f6c23e', 
+                    '#e74a3b', 
+                    '#858796'
+                ],
+                hoverBackgroundColor: [
+                    '#2e59d9',
+                    '#17a673',
+                    '#2c9faf',
+                    '#d4b12f',
+                    '#c72d2c',
+                    '#6c757d'
+                ]
+            }]
+        };
+        const options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                        }
+                    }
+                }
+            }
+        };
+        new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+        const ctx2 = document.getElementById('secondChart').getContext('2d');
+const data2 = {
+    labels: [
+        'Propriétaire',
+        'Locataire',
+        'Autre'
+    ],
+    datasets: [{
+        data: [90.9, 4.2, 4.9],
+        backgroundColor: [
+            '#ff6384',
+            '#36a2eb',
+            '#cc65fe',
+            '#ffce56',
+            '#4bc0c0'
+        ]
+    }]
+};
+const options2 = {
+    responsive: true,
+    plugins: {
+        legend: {
+            position: 'top',
+        },
+        tooltip: {
+            callbacks: {
+                label: function(tooltipItem) {
+                    return tooltipItem.label + ': ' + tooltipItem.raw;
+                }
+            }
+        }
+    }
+};
+
+// Création du second diagramme (en barres)
+new Chart(ctx2, {
+    type: 'doughnut', // Type de graphique en barres
+    data: data2,
+    options: options2
+});
     </script>
 </body>
 </html>
