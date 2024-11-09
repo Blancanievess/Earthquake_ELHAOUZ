@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte Interactive - Suivi des Tremblements de Terre</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-omnivore@0.3.3/leaflet-omnivore.min.js"></script>
+    <style>
+        /* Style global de la page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Conteneur principal avec carte */
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Carte, elle occupe toute la largeur et hauteur */
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Contrôle de couches et autres options à gauche de la carte */
+        .control-panel {
+            background-color: rgba(255, 255, 255, 0.7); /* Légèrement transparent */
+            color: rgb(0, 0, 0);
+            width: 250px;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .control-panel h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .control-panel button {
+            background-color: #a85a00;
+            border: none;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .control-panel button:hover {
+            background-color: #005e72;
+        }
+
+        .leaflet-control-layers {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Responsivité */
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .control-panel {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="control-panel">
+            <h2>Options de la carte</h2>
+            <button onclick="toggleLayer()">Basculer les tremblements de terre</button>
+            <button onclick="toggleImagery()">Basculer l'imagerie</button>
+            <button onclick="resetView()">Réinitialiser la vue</button>
+        </div>
+
+        <div id="map"></div>
+    </div>
+
+    <script>
+        // Initialisation de la carte avec Leaflet
+        var map = L.map('map').setView([31.6341, -8.0069], 10); // Coordonnées de AL HAOUZ, Maroc
+
+        // Couche de base avec l'imagerie ArcGIS
+        var arcgisLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '&copy; <a href="https://www.esri.com/en-us/home">Esri</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Couche OpenStreetMap (comme alternative)
+        var openStreetMapLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        });
+
+        // Ajouter une couche GeoJSON pour les tremblements de terre (à définir dans geojsonLayer)
+        var geojsonLayer; // Remplacer par votre propre couche GeoJSON
+
+        // Ajouter un contrôle de couches
+        var baseMaps = {
+            "ArcGIS Imagery": arcgisLayer,
+            "OpenStreetMap": openStreetMapLayer
+        };
+
+        var overlayMaps = {
+            "Tremblements de Terre": geojsonLayer
+        };
+
+        L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+        // Fonction pour basculer la couche des tremblements de terre
+        function toggleLayer() {
+            if (map.hasLayer(geojsonLayer)) {
+                map.removeLayer(geojsonLayer);
+            } else {
+                geojsonLayer.addTo(map);
+            }
+        }
+
+        // Fonction pour basculer la couche d'imagerie
+        function toggleImagery() {
+            if (map.hasLayer(arcgisLayer)) {
+                map.removeLayer(arcgisLayer);
+                openStreetMapLayer.addTo(map);
+            } else {
+                map.removeLayer(openStreetMapLayer);
+                arcgisLayer.addTo(map);
+            }
+        }
+
+        // Fonction pour réinitialiser la vue de la carte
+        function resetView() {
+            map.setView([31.6341, -8.0069], 10); // Réinitialiser à la vue de départ
+        }
+    </script>
+
+</body>
+</html>
