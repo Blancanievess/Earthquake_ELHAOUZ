@@ -5,12 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carte Interactive - Suivi des Tremblements de Terre</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-omnivore@0.3.3/leaflet-omnivore.min.js"></script>
     <script src="Haouz.geojson"></script>
+    <script src="Bt_T.geojson"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/geojson-vt@3.2.0/geojson-vt.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -176,7 +180,7 @@
     <div class="container">
         <div class="control-panel">
             <h2 class="control-panel-title">&nbsp;&nbsp;&nbsp;&nbsp;Panneau de contrôle</h2>
-            <button onclick="toggleLayer(); restoreMap()">Province du AL HAOUZ</button>
+            <button onclick="toggleLayer(); restoreMap()">Les bâtiments touchés</button>
             <button onclick="resetView(); restoreMap()">Réinitialiser la vue</button>
             <button onclick="showInfo()">Information statistiques</button> 
         </div>
@@ -224,11 +228,22 @@
                 };
             }
         }).addTo(map);
+        var geojsonLayers = L.geoJSON(Bt_T, {
+            style: function (feature) {
+                return {
+                    color: "red", 
+                    weight: 5,
+                    opacity: 0.65
+                };
+            }
+        }).addTo(map);
+
         var baseMaps = {
             "ArcGIS Imagery": arcgisLayer,
         };
         var overlayMaps = {
-            "Province AL HAOUZ": geojsonLayer
+            "Province AL HAOUZ": geojsonLayer,
+            "Les bâtiments touchés": geojsonLayers
         };
         L.control.layers(baseMaps, overlayMaps).addTo(map);
         function showInfo() {
@@ -241,10 +256,10 @@
         }
 
         function toggleLayer() {
-            if (map.hasLayer(geojsonLayer)) {
-                map.removeLayer(geojsonLayer);
+            if (map.hasLayer(geojsonLayers)) {
+                map.removeLayer(geojsonLayers);
             } else {
-                geojsonLayer.addTo(map);
+                geojsonLayers.addTo(map);
             }
         }
         function resetView() {
