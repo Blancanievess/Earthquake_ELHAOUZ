@@ -101,6 +101,7 @@
             flex-direction: column;
             align-items: flex-start;
             justify-content: flex-start;
+            height: 100vh;
         }
         .control-panel h2 {
             margin: 0;
@@ -117,6 +118,10 @@
             cursor: pointer;
             border-radius: 5px;
         }
+        .title {
+    position: relative; 
+    left: 60px; 
+}
         .control-panel button:hover {
             background-color: #005e72;
         }
@@ -143,26 +148,26 @@
             <button onclick="toggleLayer(); restoreMap()">Province du AL HAOUZ</button>
             <button onclick="toggleImagery(); restoreMap()">Basculer l'imagerie</button>
             <button onclick="resetView(); restoreMap()">Réinitialiser la vue</button>
-            <button onclick="showInfo()">Afficher les informations</button>
+            <button onclick="showInfo()">Information statistiques</button>
         </div>
         <div id="map"></div>
         <div id="info" style="display: none;"> 
             <div class="containeer">
                 <div class="text-box bottom-right">
-                    <h2>Type de logement</h2>
+                    <h2> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;Type de logement</h2>
                     <p><canvas id="housingChart" width="200" height="200"></canvas></p>
                 </div>
                 <div class="text-box bottom-left">
-                    <h2> Ancienneté du logement </h2>
+                    <h2>  &nbsp;&nbsp;Ancienneté du logement </h2>
                     <p><canvas id="age" width="200" height="200"></canvas></p>
                 </div>
                 <div class="text-box top-right">
-                    <h2>Statut d'occupation du logement </h2>
-                    <p><canvas id="secondChart" width="200" height="200"></canvas></p>
+                    <h2>Matériaux <br>de construction des murs </h2>
+                    <p><canvas id="mur" width="200" height="200"></canvas></p>
                 </div>
                 <div class="text-box top-left">
-                    <h2>g</h2>
-                    <p>'h'</canvas></p>
+                    <h2 class="title">Matériaux de<br> construction du toit </h2>
+                    <p><canvas id="secondChart" width="200" height="200"></canvas></canvas></p>
                 </div>
             </div>            
         </div>
@@ -281,12 +286,15 @@
         const ctx2 = document.getElementById('secondChart').getContext('2d');
 const data2 = {
     labels: [
-        'Propriétaire',
-        'Locataire',
+        'Dalle',
+        'Planches de bois et tuiles',
+        'Tole en ciment et tole en étain',
+        'Bois récupéré,Bambou ou Herbe recouverts de terre',
+        'Etain,Plastique et autres matériaux récupérés',
         'Autre'
     ],
     datasets: [{
-        data: [90.9, 4.2, 4.9],
+        data: [36.5,4.2, 0.3, 58.7,0.2,36.5],
         backgroundColor: [
             '#ff6384',
             '#36a2eb',
@@ -363,6 +371,57 @@ new Chart(ctx2, {
             type: 'doughnut',
             data: data3,
             options: optionss
+        });
+        const ctx4 = document.getElementById('mur').getContext('2d');
+        const data4 = {
+            labels: [
+                'Béton armé,Brisques en terre et cuite parpaings',
+                'Pierres scellées avec du moetier',
+                'Planches de bois',
+                'Pierres scellées avec de la terre',
+                'Pisé et Briques de terre crue',
+                'Bois récupéré,Etain,Herbe et Bmbou',
+                'Autres'
+            ],
+            datasets: [{
+                data: [36.6, 4.6, 0.5, 16.6,41.5,0.2,0],
+                backgroundColor: [
+                    '#4e73df', 
+                    '#1cc88a', 
+                    '#36b9cc', 
+                    '#f6c23e', 
+                    '#e74a3b', 
+                    '#858796'
+                ],
+                hoverBackgroundColor: [
+                    '#2e59d9',
+                    '#17a673',
+                    '#2c9faf',
+                    '#d4b12f',
+                    '#c72d2c',
+                    '#6c757d'
+                ]
+            }]
+        };
+        const optionsss = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                        }
+                    }
+                }
+            }
+        };
+        new Chart(ctx4, {
+            type: 'doughnut',
+            data: data4,
+            options: optionsss
         });
     </script>
 </body>
