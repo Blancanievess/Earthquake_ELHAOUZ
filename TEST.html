@@ -232,11 +232,8 @@
         fetch('Bt_T (1).json.')
   .then(response => response.json())
   .then(topoData => {
-    // Convertir TopoJSON en GeoJSON
-    var geojsonData = topojson.feature(topoData, topoData.objects.Bt_T);
-
-    // Ajouter les données GeoJSON à la carte
-    L.geoJson(geojsonData).addTo(map);
+    var geojsonLayers = topojson.feature(topoData, topoData.objects.geometry);
+    L.geoJson(geojsonLayers).addTo(map);
   });
 
         var baseMaps = {
