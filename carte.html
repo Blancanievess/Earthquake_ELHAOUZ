@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-omnivore@0.3.3/leaflet-omnivore.min.js"></script>
     <script src="Haouz.geojson"></script>
-    <script src="Bt_T.geojson"></script>
+    <script src="surfanal.geojson"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/geojson-vt@3.2.0/geojson-vt.js"></script>
@@ -180,7 +180,7 @@
     <div class="container">
         <div class="control-panel">
             <h2 class="control-panel-title">&nbsp;&nbsp;&nbsp;&nbsp;Panneau de contrôle</h2>
-            <button onclick="toggleLayer(); restoreMap()">Les bâtiments touchés</button>
+            <button onclick="toggleLayer(); restoreMap()">Surface analysée</button>
             <button onclick="resetView(); restoreMap()">Réinitialiser la vue</button>
             <button onclick="showInfo()">Information statistiques</button> 
         </div>
@@ -228,7 +228,7 @@
                 };
             }
         }).addTo(map);
-        var geojsonLayers = L.geoJSON(Bt_T, {
+        var geojsonLayers = L.geoJSON(surfanal, {
             style: function (feature) {
                 return {
                     color: "red", 
@@ -243,7 +243,7 @@
         };
         var overlayMaps = {
             "Province AL HAOUZ": geojsonLayer,
-            "Les bâtiments touchés": geojsonLayers
+            "Surface Analysée": geojsonLayers
         };
         L.control.layers(baseMaps, overlayMaps).addTo(map);
         function showInfo() {
