@@ -259,7 +259,7 @@
                 };
             }
         }).addTo(map);
-        var geojsonLayers = L.geoJSON(surfanal, {
+        var geojsonLayers = L.geoJSON(Surfanal, {
             style: function (feature) {
                 return {
                     color: "red", 
@@ -274,7 +274,7 @@ var houseIcon = L.icon({
     iconAnchor: [12, 12] 
 });
 var markers = L.markerClusterGroup();
-var batCluster = L.geoJSON(pt, {
+var batCluster = L.geoJSON(Pt, {
     pointToLayer: function(feature, latlng) {
         return L.marker(latlng, { icon: houseIcon });
     },
