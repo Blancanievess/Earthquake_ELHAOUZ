@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -269,16 +268,13 @@
                 };
             }
         }).addTo(map);
-// Définir une icône de maison
 var houseIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/9045/9045107.png',
-    iconSize: [25, 25], // Taille de l'icône
-    iconAnchor: [12, 12] // Point d'ancrage
+    iconSize: [25, 25], 
+    iconAnchor: [12, 12] 
 });
 var markers = L.markerClusterGroup();
-
 var batCluster = L.geoJSON(pt, {
-    // Utiliser l'icône maison à la place des marqueurs par défaut
     pointToLayer: function(feature, latlng) {
         return L.marker(latlng, { icon: houseIcon });
     },
@@ -288,11 +284,8 @@ var batCluster = L.geoJSON(pt, {
         }
     }
 });
-// Ajouter les marqueurs au cluster
 markers.addLayer(batCluster);
-// Ajouter le cluster à la carte
 markers.addTo(map);
-
         var baseMaps = {
             "ArcGIS Imagery": arcgisLayer,
         };
