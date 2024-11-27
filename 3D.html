@@ -15,6 +15,7 @@
     </style>
 </head>
 <body>
+    <!-- Inclusion correcte de Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
@@ -37,36 +38,33 @@
         // Contrôles d'orbite
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.screenSpacePanning = false;
 
         // Charger le modèle glb depuis une URL hébergée
         const loader = new THREE.GLTFLoader();
         loader.load(
-            'Ms.glb', // Remplacez par l'URL complète de votre fichier .glb
+            'https://example.com/models/Ms.glb', // Remplacez par l'URL complète de votre fichier
             (gltf) => {
-                scene.add(gltf.scene); // Ajouter le modèle à la scène
+                const model = gltf.scene;
+                model.scale.set(0.5, 0.5, 0.5); // Ajuste la taille
+                scene.add(model);
             },
             (xhr) => {
-                console.log(`Chargement : ${(xhr.loaded / xhr.total) * 100}%`); // Progression du chargement
+                console.log(`Chargement : ${(xhr.loaded / xhr.total) * 100}%`);
             },
             (error) => {
                 console.error('Erreur lors du chargement du modèle :', error);
             }
         );
 
-        // Position de la caméra
         camera.position.set(0, 2, 5);
 
-        // Animation
         function animate() {
             requestAnimationFrame(animate);
-            controls.update(); // Mise à jour des contrôles
+            controls.update();
             renderer.render(scene, camera);
         }
         animate();
 
-        // Gestion de la taille de la fenêtre
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
