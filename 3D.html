@@ -40,10 +40,10 @@
         controls.dampingFactor = 0.05;
         controls.screenSpacePanning = false;
 
-        // Charger le modèle glb
+        // Charger le modèle glb depuis une URL hébergée
         const loader = new THREE.GLTFLoader();
         loader.load(
-            'Ms.glb', // Remplacez ce chemin par le chemin vers votre fichier .glb
+            'Ms.glb', // Remplacez par l'URL complète de votre fichier .glb
             (gltf) => {
                 scene.add(gltf.scene); // Ajouter le modèle à la scène
             },
