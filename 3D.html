@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <!-- Inclusion correcte de Three.js -->
+    <!-- Chargement correct de Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
@@ -27,25 +27,25 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Lumières
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Lumière ambiante
+        // Ajout de lumières
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         scene.add(ambientLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // Lumière directionnelle
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
         directionalLight.position.set(10, 10, 10).normalize();
         scene.add(directionalLight);
 
-        // Contrôles d'orbite
+        // Ajout des contrôles d'orbite
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
 
-        // Charger le modèle glb depuis une URL hébergée
+        // Charger un fichier 3D .glb
         const loader = new THREE.GLTFLoader();
         loader.load(
-            'https://example.com/models/Ms.glb', // Remplacez par l'URL complète de votre fichier
+            'Ms.glb', // Remplacez par l'URL de votre modèle
             (gltf) => {
                 const model = gltf.scene;
-                model.scale.set(0.5, 0.5, 0.5); // Ajuste la taille
+                model.scale.set(1, 1, 1); // Ajuste l'échelle si nécessaire
                 scene.add(model);
             },
             (xhr) => {
@@ -56,15 +56,18 @@
             }
         );
 
+        // Position initiale de la caméra
         camera.position.set(0, 2, 5);
 
+        // Fonction d'animation
         function animate() {
             requestAnimationFrame(animate);
-            controls.update();
+            controls.update(); // Mise à jour des contrôles
             renderer.render(scene, camera);
         }
         animate();
 
+        // Gestion de la redimension de la fenêtre
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
