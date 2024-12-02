@@ -9,6 +9,8 @@
     <script src="https://unpkg.com/leaflet-omnivore@0.3.3/leaflet-omnivore.min.js"></script>
     <script src="Haouz.geojson"></script>
     <script src="surfanal.geojson"></script>
+    <script src="t.geojson"></script>
+    <script src="nt.geojson"></script>
     <script src="Pt.geojson"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
@@ -261,10 +263,28 @@
                 };
             }
         }).addTo(map);
+        var nt = L.geoJSON (nt,{
+            style:function(feature){
+                return {
+                    color:"green",
+                    weight:5,
+                    opacity:0.65
+                };
+            }              
+        }).addTo(map);
+        var t = L.geoJSON (t,{
+            style:function(feature){
+                return {
+                    color:"red",
+                    weight:5,
+                    opacity:0.65
+                };
+            }              
+        }).addTo(map);
         var geojsonLayers = L.geoJSON(Surfanal, {
             style: function (feature) {
                 return {
-                    color: "red", 
+                    color: "yellow", 
                     weight: 5,
                     opacity: 0.65
                 };
