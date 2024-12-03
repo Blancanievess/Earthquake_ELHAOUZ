@@ -409,7 +409,7 @@ markers.addTo(map);
             "Bâtiments Non Touchés": nt,
             "Bâtiments Touchés": t,
             "Heatmap": heatLayer,
-            "Bâtiments Touchés sous forme de point": batCluster
+            "Bâtiments Touchés sous forme de point": markers
         };
         L.control.layers(baseMaps, overlayMaps, { collapsed: true }).addTo(map);
         function showInfo() {
