@@ -405,7 +405,19 @@ var heatData = Pt.features.map(function (feature) {
 
             requestAnimationFrame(pulseEffect);
         };
-        pulseEffect();        
+        pulseEffect();  
+         var legend = L.control({position: 'bottomright'});  // Position de la légende (en bas à droite)
+
+        legend.onAdd = function(map) {
+            var div = L.DomUtil.create('div', 'legend');  // Crée un élément div avec la classe 'legend'
+            div.innerHTML = 
+                '<h4>Légende</h4>' +
+                '<div><span class="green"></span>Bâtiments Non Touchés (Polygone Vert)</div>' +
+                '<div><span class="red"></span>Bâtiments Touchés (Polygone Rouge)</div>';
+            return div;
+        };
+
+        legend.addTo(map);
 markers.addTo(map);
         var baseMaps = {
             "ArcGIS Imagery": arcgisLayer,
