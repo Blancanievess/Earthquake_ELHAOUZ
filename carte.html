@@ -137,7 +137,7 @@
     left: 60px; 
 }
          .legend {
-            background-color: rgba(255, 255, 255, 0.7); /* Fond transparent */
+            background-color: rgba(255, 255, 255, 0.7); 
             border: 2px solid #ddd;
             padding: 10px;
             font-family: Arial, sans-serif;
@@ -360,25 +360,25 @@ var batCluster = L.geoJSON(Pt, {
 markers.addLayer(batCluster);
 var heatData = Pt.features.map(function (feature) {
             return [
-                feature.geometry.coordinates[1], // Latitude
-                feature.geometry.coordinates[0]  // Longitude
+                feature.geometry.coordinates[1], 
+                feature.geometry.coordinates[0]  
             ];
         });
 
         // Initialisation de la heatmap
         var heatLayer = L.heatLayer(heatData, {
-            radius: 30,       // Taille des points de la heatmap
-            blur: 25,         // Flou des points de la heatmap
-            maxZoom: 18,      // Niveau de zoom maximal
+            radius: 30,       
+            blur: 25,         
+            maxZoom: 18,      
             gradient: {
-                0.0: "green",  // Points faibles (vert)
-                0.5: "orange", // Points modérés (orange)
-                1.0: "red"     // Points forts (rouge)
+                0.0: "green",  
+                0.5: "orange", 
+                1.0: "red"    
             }
         }).addTo(map);
         var pulseEffect = function() {
-            var radius = 30 + Math.sin(Date.now() / 1000) * 10;  // Variation de la taille des points
-            var blur = 25 + Math.cos(Date.now() / 1000) * 5;     // Variation du flou
+            var radius = 30 + Math.sin(Date.now() / 1000) * 10;  
+            var blur = 25 + Math.cos(Date.now() / 1000) * 5;     
 
             // Met à jour dynamiquement les paramètres de la heatmap
             heatLayer.setOptions({
@@ -388,10 +388,10 @@ var heatData = Pt.features.map(function (feature) {
             requestAnimationFrame(pulseEffect);
         };
         pulseEffect();  
-         var legend = L.control({position: 'bottomright'});  // Position de la légende (en bas à droite)
+         var legend = L.control({position: 'bottomright'});  
 
         legend.onAdd = function(map) {
-            var div = L.DomUtil.create('div', 'legend');  // Crée un élément div avec la classe 'legend'
+            var div = L.DomUtil.create('div', 'legend');  
             div.innerHTML = 
                 '<h4>Légende :</h4>' +
                 '<div><span class="green"></span>Bâtiments Non Touchés</div>' +
@@ -408,8 +408,8 @@ markers.addTo(map);
             "Surface Analysée": geojsonLayers,
             "Bâtiments Non Touchés": nt,
             "Bâtiments Touchés": t,
-            "Bâtiments Non Touchés sous forme de point": Pt,
-            "Heat map": heatLayer
+            "Bâtiments Non Touchés sous forme de point": Pt
+            
         };
         L.control.layers(baseMaps, overlayMaps, { collapsed: true }).addTo(map);
         function showInfo() {
@@ -435,7 +435,7 @@ markers.addTo(map);
             }
         }
         function resetView() {
-            map.setView([31.337, -7.874], 10);
+            map.setView([31.0599631, -8.3656094], 11);
         }
         const ctx = document.getElementById('housingChart').getContext('2d');
         const data = {
