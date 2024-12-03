@@ -6,26 +6,16 @@
     <title>Carte Interactive - Suivi des Tremblements de Terre</title>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <!-- Lien vers le plugin Leaflet.heat -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet.heat/dist/leaflet-heat.css" />
     <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-
-    <!-- Lien vers Leaflet Marker Cluster -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-    <!-- Lien vers les fichiers GeoJSON -->
     <script src="Haouz.geojson"></script>
     <script src="surfanal.geojson"></script>
     <script src="t.geojson"></script>
     <script src="nt.geojson"></script>
     <script src="Pt.geojson"></script>
-
-    <!-- Lien vers Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Lien vers Google Fonts (Poppins) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -305,7 +295,6 @@
             <p>Crédit des données : Haut-Commissariat au Plan (HCP)</p>
         </div>    
         <div class="background-shape">
-
             <svg class="topography-shape js-shape" width="1200px" height="580px" viewBox="0 0 1200 580" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero"></path>
               <path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-1800, 60) scale(2.8, 2.8) skewX(30) " style="position: relative; z-index: 0; fill: rgb(199, 225, 243);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-1650, 55) scale(2.65, 2.65) skewX(27.5) " style="position: relative; z-index: 1; fill: rgb(184, 207, 230);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-1500, 50) scale(2.5, 2.5) skewX(25) " style="position: relative; z-index: 2; fill: rgb(169, 190, 218);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-1350, 45) scale(2.3499999999999996, 2.3499999999999996) skewX(22.5) " style="position: relative; z-index: 3; fill: rgb(154, 173, 206);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-1200, 40) scale(2.2, 2.2) skewX(20) " style="position: relative; z-index: 4; fill: rgb(139, 155, 193);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-1050, 35) scale(2.05, 2.05) skewX(17.5) " style="position: relative; z-index: 5; fill: rgb(125, 138, 181);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-900, 30) scale(1.9, 1.9) skewX(15) " style="position: relative; z-index: 6; fill: rgb(110, 121, 169);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-750, 25) scale(1.75, 1.75) skewX(12.5) " style="position: relative; z-index: 7; fill: rgb(95, 103, 156);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-600, 20) scale(1.6, 1.6) skewX(10) " style="position: relative; z-index: 8; fill: rgb(80, 86, 144);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-450, 15) scale(1.45, 1.45) skewX(7.5) " style="position: relative; z-index: 9; fill: rgb(65, 69, 132);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-300, 10) scale(1.3, 1.3) skewX(5) " style="position: relative; z-index: 10; fill: rgb(50, 51, 119);"></path><path d="M734.567 34.372c-28.692 61.724-23.266 100.422 16.275 116.094 59.313 23.508 200.347 32.911 259.299 83.906 58.95 50.994 238.697 11.572 269.438-75.95C1310.32 70.9 1365.669-64 1073.808-64c-194.576 0-307.654 32.79-339.24 98.372h-.001z" fill="#FFFA72" fill-rule="nonzero" transform="translate(-150, 5) scale(1.15, 1.15) skewX(2.5) " style="position: relative; z-index: 11; fill: rgb(35, 34, 107);"></path></svg>
@@ -387,8 +376,6 @@ var heatData = Pt.features.map(function (feature) {
                 1.0: "red"     // Points forts (rouge)
             }
         }).addTo(map);
-
-        // Fonction d'animation pour la heatmap
         var pulseEffect = function() {
             var radius = 30 + Math.sin(Date.now() / 1000) * 10;  // Variation de la taille des points
             var blur = 25 + Math.cos(Date.now() / 1000) * 5;     // Variation du flou
@@ -398,7 +385,6 @@ var heatData = Pt.features.map(function (feature) {
                 radius: radius,
                 blur: blur
             });
-
             requestAnimationFrame(pulseEffect);
         };
         pulseEffect();  
@@ -412,7 +398,6 @@ var heatData = Pt.features.map(function (feature) {
                 '<div><span class="red"></span>Bâtiments Touchés</div>';
             return div;
         };
-
         legend.addTo(map);
 markers.addTo(map);
         var baseMaps = {
@@ -420,7 +405,11 @@ markers.addTo(map);
         };
         var overlayMaps = {
             "Province AL HAOUZ": geojsonLayer,
-            "Surface Analysée": geojsonLayers
+            "Surface Analysée": geojsonLayers,
+            "Bâtiments Non Touchés": nt,
+            "Bâtiments Touchés": t,
+            "Bâtiments Non Touchés sous forme de point": Pt,
+            "Heat map": heatLayer
         };
         L.control.layers(baseMaps, overlayMaps).addTo(map);
         function showInfo() {
