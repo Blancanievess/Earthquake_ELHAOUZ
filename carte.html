@@ -408,8 +408,8 @@ markers.addTo(map);
             "Surface Analysée": geojsonLayers,
             "Bâtiments Non Touchés": nt,
             "Bâtiments Touchés": t,
-            "Heatmap": heatLayer
-            
+            "Heatmap": heatLayer,
+            "Bâtiments Touchés sous forme de point": batCluster
         };
         L.control.layers(baseMaps, overlayMaps, { collapsed: true }).addTo(map);
         function showInfo() {
