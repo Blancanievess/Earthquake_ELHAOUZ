@@ -301,7 +301,7 @@
         </div>
     </div>
     <script>
-        var map = L.map('map').setView([31.0599631, -8.3656094], 12); 
+        var map = L.map('map').setView([31.0599631, -8.3656094], 11); 
         var arcgisLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: '&copy; <a href="https://www.esri.com/en-us/home">Esri</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
@@ -406,10 +406,7 @@ markers.addTo(map);
         var overlayMaps = {
             "Province AL HAOUZ": geojsonLayer,
             "Surface Analysée": geojsonLayers,
-            "Bâtiments Non Touchés": nt,
-            "Bâtiments Touchés": t,
-            "Bâtiments Non Touchés sous forme de point": Pt
-           
+            
         };
         L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
         function showInfo() {
