@@ -409,7 +409,7 @@ markers.addTo(map);
             "Bâtiments Non Touchés": nt
             
         };
-        L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
+        L.control.layers(baseMaps, overlayMaps, { collapsed: true }).addTo(map);
         function showInfo() {
             document.getElementById('map').style.display = 'none';
             document.getElementById('info').style.display = 'block';
