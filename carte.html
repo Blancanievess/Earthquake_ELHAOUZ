@@ -411,7 +411,7 @@ markers.addTo(map);
             "Bâtiments Non Touchés sous forme de point": Pt,
             "Heat map": heatLayer
         };
-        L.control.layers(baseMaps, overlayMaps).addTo(map);
+        L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
         function showInfo() {
             document.getElementById('map').style.display = 'none';
             document.getElementById('info').style.display = 'block';
