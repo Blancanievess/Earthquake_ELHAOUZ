@@ -183,7 +183,24 @@
         background-color: #fff;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+ @keyframes pulsate {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
 
+        .leaflet-heatmap {
+            animation: pulsate 2s infinite;
+        }
     .comparison-frame {
         width: 100%;
         height: 100%;
@@ -306,6 +323,39 @@ var batCluster = L.geoJSON(Pt, {
     }
 });
 markers.addLayer(batCluster);
+var heatData = Pt.features.map(function (feature) {
+            return [
+                feature.geometry.coordinates[1], // Latitude
+                feature.geometry.coordinates[0]  // Longitude
+            ];
+        });
+
+        // Initialisation de la heatmap
+        var heatLayer = L.heatLayer(heatData, {
+            radius: 30,       // Taille des points de la heatmap
+            blur: 25,         // Flou des points de la heatmap
+            maxZoom: 18,      // Niveau de zoom maximal
+            gradient: {
+                0.0: "green",  // Points faibles (vert)
+                0.5: "orange", // Points modérés (orange)
+                1.0: "red"     // Points forts (rouge)
+            }
+        }).addTo(map);
+
+        // Fonction d'animation pour la heatmap
+        var pulseEffect = function() {
+            var radius = 30 + Math.sin(Date.now() / 1000) * 10;  // Variation de la taille des points
+            var blur = 25 + Math.cos(Date.now() / 1000) * 5;     // Variation du flou
+
+            // Met à jour dynamiquement les paramètres de la heatmap
+            heatLayer.setOptions({
+                radius: radius,
+                blur: blur
+            });
+
+            requestAnimationFrame(pulseEffect);
+        };
+        pulseEffect();        
 markers.addTo(map);
         var baseMaps = {
             "ArcGIS Imagery": arcgisLayer,
