@@ -541,8 +541,7 @@ markers.addTo(map);
             document.getElementById('R').style.display = 'none';
         }
         function toggleLayer() {
-            if (map.hasLayer(geojsonLayers)) {
-                map.removeLayer(geojsonLayers);
+            if (map.hasLayer(geojsonLayers)) {;
             } else {
                 geojsonLayers.addTo(map);
             }
