@@ -17,6 +17,7 @@
     <script src="Pt.geojson"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -101,10 +102,12 @@
             width: 100%;
             height: 100%;
         }
-        #map {
-            width: 100%;
-            height: 100%;
-        }
+        #map {  width: 100%;
+            height: 100%; }
+        #chart { height: 800px;  /* Réduire la hauteur */
+    width: 100%;    /* Utiliser toute la largeur disponible */
+    margin: 0 auto;
+    padding: 10px;}
         #info {
             width: 100%;
             height: 100%;
@@ -272,6 +275,7 @@
             <button onclick="resetView(); restoreMap()">Réinitialiser la vue</button>
             <button onclick="toggleFlux()">Flux de l'aide social</button>
             <button onclick="showInfo()">Information statistiques</button> 
+            <div id="chart"></div>
         </div>
         <div id="qst1" style="display: none;">
             <iframe src="https://baouch.github.io/try/" style="width: 100%; height: 100%; border: none;"></iframe>
@@ -349,11 +353,74 @@
         };
     },
     onEachFeature: function (feature, layer) {
-        if (feature.properties && feature.properties.Nom_Commun) {
-            layer.bindPopup(feature.properties.Nom_Commun);
-        }
+    if (feature.properties && feature.properties.Nom_Commun) {
+        var popupContent = "<strong>Nom de la commune:</strong> " + feature.properties.Nom_Commun;
+        
+        if (feature.properties.surface) {
+    var surfaceInHa = feature.properties.surface ; 
+    popupContent += "<br><strong>Surface:</strong> " + surfaceInHa.toFixed(2) + "ha";  
+}
+        
+        // Lier le popup à la couche
+        layer.bindPopup(popupContent);
     }
-}).addTo(map);
+
+                // Ajouter un événement au clic
+                layer.on('click', function () {
+                    if (feature.properties) {
+                        // Mettre à jour le graphique avec les données de la feature cliquée
+                        updateChart(feature.properties);
+                    }
+                });
+            }
+        }).addTo(map);
+        var chartDom = document.getElementById('chart');
+        var myChart = echarts.init(chartDom);
+
+        // Fonction pour mettre à jour le graphique
+        function updateChart(properties) {
+            var option = {
+                title: {
+                    text: 'Statistiques de ' + properties.Nom_Commun,
+                    left: 'center',
+                    textStyle: {
+                        fontWeight: 'bold',  // Gras
+                        color: '#333',  // Couleur du texte
+                        fontFamily: 'Poppins, sans-serif',  // Police
+                        textShadow: '1px 1px 4px rgba(0, 0, 0, 0.2)',  // Ombre du texte
+                    }
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['Ménages', 'Population']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        type: 'bar',
+                        data: [
+                            properties.Nb_Menages,
+                            properties.Population
+                        ]
+                    }
+                ],
+                itemStyle: {
+                    color: '#1A1A59' 
+                }
+            };
+            myChart.setOption(option);
+        }
+    
+
+        // Initialisation avec des données par défaut
+        if (Surfanal.features.length > 0) {
+            updateChart(Surfanal.features[0].properties);
+        }
 var houseIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/9045/9045107.png',
     iconSize: [25, 25], 
@@ -430,24 +497,28 @@ markers.addTo(map);
             document.getElementById('info').style.display = 'block';
             document.getElementById('qst1').style.display = 'none';
             document.getElementById('flux').style.display = 'none';
+            document.getElementById('chart').style.display = 'none';
         }
         function toggleComparison() {
             document.getElementById('map').style.display = 'none';
             document.getElementById('qst1').style.display = 'block';
             document.getElementById('info').style.display = 'none';
             document.getElementById('flux').style.display = 'none';
+            document.getElementById('chart').style.display = 'none';
         }
           function toggleFlux() {
             document.getElementById('map').style.display = 'none';
             document.getElementById('qst1').style.display = 'none';
             document.getElementById('info').style.display = 'none';
              document.getElementById('flux').style.display = 'block';
+             document.getElementById('chart').style.display = 'none';
         }
         function restoreMap() {
             document.getElementById('map').style.display = 'block';
             document.getElementById('info').style.display = 'none';
             document.getElementById('qst1').style.display = 'none';
             document.getElementById('flux').style.display = 'none';
+            document.getElementById('chart').style.display = 'block';
         }
         function toggleLayer() {
             if (map.hasLayer(geojsonLayers)) {
