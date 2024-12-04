@@ -340,15 +340,20 @@
                 };
             }              
         }).addTo(map);
-        var geojsonLayers = L.geoJSON(Surfanal, {
-            style: function (feature) {
-                return {
-                    color: "yellow", 
-                    weight: 5,
-                    opacity: 0.65
-                };
-            }
-        }).addTo(map);
+       var geojsonLayers = L.geoJSON(Surfanal, {
+    style: function (feature) {
+        return {
+            color: "yellow",
+            weight: 5,
+            opacity: 0.65
+        };
+    },
+    onEachFeature: function (feature, layer) {
+        if (feature.properties && feature.properties.Nom_Commun) {
+            layer.bindPopup(feature.properties.Nom_Commun);
+        }
+    }
+}).addTo(map);
 var houseIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/9045/9045107.png',
     iconSize: [25, 25], 
